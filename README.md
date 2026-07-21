@@ -1,25 +1,32 @@
-# BetLedger Pro v2.6 — Compact UI
+# BetLedger Pro v2.7 — Automatic Cloud Sync
 
-This release reduces the overall visual scale while preserving all Cloudflare Pages, Pages Functions, D1, and two-user functionality.
+This release makes Cloudflare D1 the primary shared data store for each account.
 
-## Changes
+## What changed
 
-- Narrower desktop sidebar
-- Smaller navigation buttons and account control
-- More compact dashboard header
-- Shorter metric cards with reduced padding
-- Smaller panel headings and chart footprint
-- Denser forms, filters, tables, badges, and settings cards
-- Improved tablet and mobile spacing
-- Jarol/Mateo authentication and separate D1 data remain unchanged
+- Automatically saves every bet, edit, deletion, bankroll change, import, reset, and demo-data change to Cloudflare D1.
+- Uses a 750 ms debounced save to avoid unnecessary writes.
+- Automatically loads the account's latest D1 data at login.
+- Retries pending changes when internet access returns.
+- Checks for newer cloud data every 20 seconds while the app is open and whenever the tab becomes active.
+- Displays `Saving…`, `Saved to Cloudflare`, `Pending sync`, or `Sync failed` status.
+- Keeps localStorage only as an offline cache.
+- Removes obsolete Supabase sync code that could override the Cloudflare implementation.
 
-## Update an existing deployment
+## Deployment
 
-Replace only these files in the GitHub repository:
+For an existing Cloudflare Pages deployment, replace `index.html` and `README.md` in the GitHub repository and commit to the deployed branch.
 
-- `index.html`
-- `README.md`
+The existing `functions/`, `schema.sql`, `wrangler.toml`, D1 database, bindings, and Cloudflare secrets can remain unchanged.
 
-Do not replace or delete `functions/`, `wrangler.toml`, `schema.sql`, the D1 database, or Cloudflare secrets.
+## Verify
 
-Commit to `main`. Cloudflare Pages will redeploy automatically.
+1. Sign in and add a test bet.
+2. Wait until the status reads `Saved to Cloudflare`.
+3. In the D1 console run:
+
+```sql
+SELECT user_id, updated_at, length(bets_json) AS bets_json_size FROM user_state;
+```
+
+4. Sign in to the same account on another device. The test bet should load automatically.
