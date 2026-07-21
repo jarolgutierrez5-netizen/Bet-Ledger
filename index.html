@@ -53,6 +53,99 @@ body:before{opacity:.13;background-size:42px 42px}
 @media(max-width:700px){.app-shell{display:block}.sidebar{position:sticky;height:auto;padding:9px 10px;flex-direction:row;align-items:center;border-right:0;border-bottom:1px solid rgba(255,255,255,.1)}.side-brand{display:none}.tabs{display:flex;overflow:auto;gap:5px}.tab{font-size:.72rem;width:auto;white-space:nowrap;padding:10px}.tab:before{font-size:.9rem}.side-bottom{margin:0 0 0 auto}.side-bottom .btn{font-size:0;padding:10px}.side-bottom .btn:after{content:"↪";font-size:1rem}.workspace{padding:0 13px 24px}.page-top{min-height:92px}.page-title h1{font-size:1.65rem}.user-chip{min-width:0;padding:9px 11px}.metrics{grid-template-columns:1fr 1fr}.metric{min-height:128px;padding:15px}.metric strong{font-size:1.45rem}.settings-grid{grid-template-columns:1fr}}
 @media(max-width:430px){.metrics{grid-template-columns:1fr}.page-top{align-items:flex-start;padding-top:18px}.page-title p{max-width:220px}.user-chip{font-size:.7rem}}
 
+
+/* v2.6 compact density optimization */
+:root{--radius:14px}
+.app-shell{grid-template-columns:205px minmax(0,1fr)}
+.sidebar{padding:20px 12px 14px}
+.side-brand{font-size:1.25rem;margin:5px 8px 22px}
+.tabs{gap:5px}
+.tab{padding:10px 12px;min-height:42px;border-radius:9px;font-size:.80rem;gap:10px}
+.tab:before{font-size:.92rem}
+.side-bottom .btn{padding:10px 12px;font-size:.78rem;border-radius:9px}
+.workspace{padding:0 22px 28px}
+.page-content{max-width:1420px}
+.page-top{min-height:94px;padding:18px 0 14px;gap:14px}
+.page-title h1{font-size:1.72rem}
+.page-title p{font-size:.78rem;margin-top:3px}
+.user-chip{padding:8px 11px;min-width:116px;font-size:.74rem}
+.grid{gap:12px}
+.metrics{gap:9px}
+.metric{min-height:124px!important;padding:14px 15px;border-radius:10px}
+.metric:nth-child(n+5){min-height:98px!important}
+.metric label{font-size:.72rem}
+.metric strong{font-size:clamp(1.25rem,1.65vw,1.65rem)}
+.metric small{font-size:.67rem;line-height:1.35}
+.panel{border-radius:12px}
+.panel-head{padding:15px 16px 0}
+.panel-head h2{font-size:.92rem}
+.panel-head p{font-size:.72rem;margin-top:2px}
+.chart{min-height:330px}
+.chartbox{height:270px;padding:10px 16px 15px}
+.summary-body,.analytics-body{padding:11px 16px 15px}
+.analytics-card{min-height:205px}
+.rank-list{gap:4px}
+.rank-item{padding:8px 2px}
+.rank-name{font-size:.80rem}
+.rank-meta{font-size:.64rem}
+.rank-value{font-size:.79rem}
+.progress-row{margin:10px 0}
+.progress-top{font-size:.71rem}
+.insight{padding:10px;margin-top:8px;font-size:.72rem;border-radius:10px}
+.form{padding:14px}
+.form-grid{gap:9px}
+.field{gap:5px}
+.field label{font-size:.69rem}
+input,select,textarea{padding:9px 10px;border-radius:9px;font-size:.78rem}
+textarea{min-height:66px}
+.form-actions{margin-top:11px;gap:7px}
+.btn{padding:9px 11px;border-radius:9px;font-size:.76rem}
+.filters{gap:7px;padding:11px 14px}
+th,td{padding:9px 10px}
+th{font-size:.62rem}
+td{font-size:.74rem}
+.badge{padding:4px 7px;font-size:.62rem}
+.icon{padding:5px 7px;font-size:.68rem}
+.table-wrap{max-height:560px}
+.foot{padding:9px 14px 12px;font-size:.66rem}
+.settings-grid{gap:12px}
+.settings-card{padding:16px}
+.settings-card h3{font-size:.92rem;margin-bottom:9px}
+.settings-card p{font-size:.72rem}
+.login-card{max-width:410px;padding:23px;border-radius:20px}
+.login-card h2{font-size:1.65rem}
+.login-card p{font-size:.78rem}
+@media(max-width:1100px){
+ .app-shell{grid-template-columns:72px minmax(0,1fr)}
+ .sidebar{padding-inline:8px}
+ .workspace{padding-inline:16px}
+ .tab{min-height:40px;padding:9px}
+ .metrics{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:700px){
+ .sidebar{padding:7px 8px}
+ .tabs{gap:3px}
+ .tab{padding:8px 9px;min-height:36px;font-size:.66rem}
+ .workspace{padding:0 10px 20px}
+ .page-top{min-height:76px;padding:12px 0 10px}
+ .page-title h1{font-size:1.38rem}
+ .page-title p{font-size:.68rem}
+ .user-chip{padding:7px 9px;font-size:.66rem}
+ .metrics{gap:7px}
+ .metric{min-height:105px!important;padding:12px}
+ .metric:nth-child(n+5){min-height:88px!important}
+ .metric strong{font-size:1.25rem}
+ .panel-head{padding:13px 13px 0}
+ .chartbox{height:230px;padding-inline:12px}
+}
+@media(max-width:430px){
+ .metrics{grid-template-columns:1fr 1fr}
+ .metric{min-height:96px!important}
+ .metric label{font-size:.65rem}
+ .metric strong{font-size:1.12rem}
+ .metric small{font-size:.61rem}
+}
+
 </style>
 </head>
 <body>
@@ -111,6 +204,16 @@ async function pullCloudState(force=false){if(!currentUser)return;setCloudStatus
 async function establishSession(user){currentUser=user;setUserStorage(user);$('loginGate').classList.add('hidden');$('userChip').textContent=user[0].toUpperCase()+user.slice(1);$('userChip').classList.remove('hidden');setCloudStatus('Cloud connected','online');syncSettings();render();await pullCloudState(false)}
 async function initCloud(){try{const data=await api('session');if(data.user)await establishSession(data.user);else $('loginGate').classList.remove('hidden')}catch{$('loginGate').classList.remove('hidden')}}
 function toast(message,type='success'){const el=$('toast');el.textContent=message;el.className=`toast ${type}`;clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.add('hidden'),3200)}function validateBetForm(){document.querySelectorAll('.field-error').forEach(x=>x.remove());const checks=[['event','Enter the event or matchup.'],['selection','Enter your betting selection.'],['odds','Enter valid American odds, such as -110 or +125.'],['stake','Enter a stake greater than $0.']];let first=null;for(const [id,msg] of checks){const el=$(id),invalid=id==='odds'?(!el.value||+el.value===0):id==='stake'?(!el.value||+el.value<=0):!el.value.trim();if(invalid){const note=document.createElement('div');note.className='field-error';note.textContent=msg;el.closest('.field').appendChild(note);first??=el}}if(first){first.focus();toast('Please complete the highlighted fields.','error');return false}return true}
+
+function cloudConfigured(){return !!(window.BETLEDGER_SUPABASE_URL&&window.BETLEDGER_SUPABASE_PUBLISHABLE_KEY&&!window.BETLEDGER_SUPABASE_URL.includes('YOUR_'))}
+function setCloudStatus(label,state=''){if($('cloudLabel'))$('cloudLabel').textContent=label;if($('cloudDot'))$('cloudDot').className=`cloud-dot ${state}`;if($('cloudNotice'))$('cloudNotice').textContent=label}
+function queueCloudSync(){if(!cloudClient||!cloudUser)return;clearTimeout(cloudTimer);cloudTimer=setTimeout(pushCloudState,700)}
+async function pushCloudState(){if(!cloudClient||!cloudUser||cloudBusy)return;cloudBusy=true;setCloudStatus('Syncing…');try{const {error}=await cloudClient.from('betledger_state').upsert({user_id:cloudUser.id,bets,settings,updated_at:new Date().toISOString()},{onConflict:'user_id'});if(error)throw error;setCloudStatus('Cloud synced','online')}catch(err){console.error(err);setCloudStatus(`Sync error: ${err.message}`,'offline')}finally{cloudBusy=false}}
+async function pullCloudState(force=false){if(!cloudClient||!cloudUser)return;setCloudStatus('Loading cloud…');try{const {data,error}=await cloudClient.from('betledger_state').select('bets,settings,updated_at').eq('user_id',cloudUser.id).maybeSingle();if(error)throw error;if(data){if(force||!bets.length||confirm("Replace this device's local data with your cloud data?")){bets=Array.isArray(data.bets)?data.bets:[];settings={...settings,...(data.settings||{})};saveLocalOnly();syncSettings();render();toast(`Loaded ${bets.length} cloud bets.`)}}else await pushCloudState();setCloudStatus('Cloud synced','online')}catch(err){console.error(err);setCloudStatus(`Cloud error: ${err.message}`,'offline')}}
+function saveLocalOnly(){try{localStorage.setItem(DATA_KEY,JSON.stringify(bets));localStorage.setItem(SETTINGS_KEY,JSON.stringify(settings));return true}catch{return false}}
+async function initCloud(){if(!cloudConfigured()||!window.supabase){setCloudStatus('Cloud setup needed');$('cloudHelp').textContent='Add your Supabase URL and publishable key to supabase-config.js, then reload.';return}cloudClient=window.supabase.createClient(window.BETLEDGER_SUPABASE_URL,window.BETLEDGER_SUPABASE_PUBLISHABLE_KEY);const {data}=await cloudClient.auth.getSession();await handleSession(data.session);cloudClient.auth.onAuthStateChange((_event,session)=>setTimeout(()=>handleSession(session),0))}
+async function handleSession(session){cloudUser=session?.user||null;const signed=!!cloudUser;$('signInBtn').classList.toggle('hidden',signed);$('signUpBtn').classList.toggle('hidden',signed);$('signOutBtn').classList.toggle('hidden',!signed);$('pullCloudBtn').classList.toggle('hidden',!signed);$('authEmail').disabled=signed;$('authPassword').disabled=signed;if(signed){$('authEmail').value=cloudUser.email||'';$('cloudHelp').textContent=`Signed in as ${cloudUser.email}. Saves sync automatically.`;setCloudStatus('Cloud connected','online');await pullCloudState(!bets.length)}else{setCloudStatus('Sign in to sync');$('cloudHelp').textContent='Sign in to sync your personal ledger across devices.'}}
+async function authAction(mode){if(!cloudClient)return toast('Configure Supabase first.','error');const email=$('authEmail').value.trim(),password=$('authPassword').value;if(!email||password.length<6)return toast('Enter an email and password of at least 6 characters.','error');setCloudStatus(mode==='signup'?'Creating account…':'Signing in…');const res=mode==='signup'?await cloudClient.auth.signUp({email,password}):await cloudClient.auth.signInWithPassword({email,password});if(res.error){setCloudStatus(res.error.message,'offline');toast(res.error.message,'error')}else toast(mode==='signup'?'Account created. Check your email if confirmation is enabled.':'Signed in.')}
 
 function potential(stake,odds){stake=+stake;odds=+odds;if(!stake||!odds)return 0;return odds>0?stake*odds/100:stake*100/Math.abs(odds)}function pl(b){if(b.result==='Win')return +b.payout-+b.stake;if(b.result==='Loss')return -+b.stake;return 0}function decimalOdds(o){o=+o;if(!o)return 0;return o>0?1+o/100:1+100/Math.abs(o)}function clv(b){if(!b.closingOdds||!b.odds)return null;return (decimalOdds(b.odds)/decimalOdds(b.closingOdds)-1)*100}function cls(n){return n>0?'positive':n<0?'negative':''}function signed(n){return `${n>0?'+':''}${money(n)}`}function esc(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}function dateFmt(s){return new Date(`${s}T12:00:00`).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'2-digit'})}
 function settled(list=bets){return list.filter(b=>b.result!=='Pending')}function stats(list=bets){const s=settled(list),wins=s.filter(b=>b.result==='Win').length,losses=s.filter(b=>b.result==='Loss').length,pushes=s.filter(b=>b.result==='Push').length,stake=s.reduce((a,b)=>a+(b.result==='Push'?0:+b.stake),0),profit=s.reduce((a,b)=>a+pl(b),0),pending=list.filter(b=>b.result==='Pending').reduce((a,b)=>a+ +b.stake,0),decisions=wins+losses;return{s,wins,losses,pushes,stake,profit,pending,roi:stake?profit/stake*100:0,winRate:decisions?wins/decisions*100:0,currentBankroll:+settings.startingBankroll+profit,units:+settings.unitSize?profit/+settings.unitSize:0}}
