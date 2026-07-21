@@ -1,38 +1,53 @@
-# BetLedger — Sports Betting P/L Tracker
+# BetLedger Pro
 
-A responsive, single-file sports betting profit-and-loss tracker that runs entirely in the browser.
+A responsive, dependency-free sports betting profit-and-loss tracker designed for GitHub Pages.
 
-## Features
+## Version 2.0 features
 
-- Add, edit, and delete wagers
-- Track sport, event, selection, sportsbook, odds, stake, result, payout, and notes
-- Automatic payout calculation for American odds
-- Dashboard metrics for net P/L, ROI, win rate, total staked, pending risk, and average odds
-- Cumulative profit chart
-- Search and filters for sport, result, sportsbook, and date range
-- CSV import and export
+- Starting bankroll and current bankroll tracking
+- Standard unit size and unit-based P/L
+- Net profit, ROI, win rate, average stake, pending exposure, and average odds
+- Closing Line Value (CLV) using bet odds versus closing odds
+- Pregame versus live-bet tracking
+- Performance breakdowns by sport, market, sportsbook, and timing
+- Monthly performance table
+- Bankroll curve and cumulative P/L chart
+- Add, edit, delete, search, and filter wagers
+- Automatic American-odds payout calculation
+- Complete JSON backup and restore
+- CSV export for spreadsheet analysis
 - Local browser storage
 - Responsive desktop, tablet, and mobile layouts
-- Demo-data loader
+- Demo dataset for testing
 
-## How to use
+## Manual GitHub upload
 
-1. Open `index.html` in Chrome, Edge, Safari, or Firefox.
-2. Enter a wager and select its result.
-3. For a winning wager, the payout is calculated automatically from the stake and American odds. You can overwrite it when needed.
-4. Use the filters above the history table to analyze selected groups of bets.
-5. Export your data to CSV regularly for backup.
+1. Open your `Bet-Ledger` repository on GitHub.
+2. Select **Add file → Upload files**.
+3. Upload `index.html` and `README.md` from this folder.
+4. Commit the files to the `main` branch.
+5. Open **Settings → Pages**.
+6. Under **Build and deployment**, choose **Deploy from a branch**.
+7. Select the `main` branch and the `/ (root)` folder, then save.
 
-## Data storage
+Your site should be published at:
 
-All data is stored in the browser using `localStorage`. Data does not leave your device. Clearing browser storage may delete the saved wagers, so CSV exports are recommended.
+`https://jarolgutierrez5-netizen.github.io/Bet-Ledger/`
 
-## CSV format
+## Data storage and device syncing
 
-The importer recognizes these columns:
+GitHub Pages hosts the application files, but wagers are stored in the browser's `localStorage`. They are not automatically committed to GitHub and do not automatically sync between devices.
 
-`date,sport,event,betType,sportsbook,selection,odds,stake,result,payout,notes`
+Use **Backup JSON** to download a complete copy of the ledger and settings. On another device, choose **Restore JSON** to import that backup. CSV exports are intended for analysis and external recordkeeping.
 
-## Version
+## Important security note
 
-- v1.0 — Initial responsive P/L tracker with local storage, CSV tools, filtering, metrics, editing, and cumulative profit chart.
+Do not place a GitHub personal access token directly in `index.html`. Any token included in a public GitHub Pages site can be seen and misused by visitors. True authenticated multi-device cloud sync should use a backend service such as Supabase or Firebase with appropriate access controls.
+
+## Run locally
+
+Open `index.html` in any modern browser. No installation, build process, server, or external dependency is required.
+
+## Disclaimer
+
+This application is for personal recordkeeping and informational use. It does not provide betting advice or guarantee outcomes. Bet responsibly.
