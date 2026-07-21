@@ -1,32 +1,55 @@
-# BetLedger Pro v2.7 — Automatic Cloud Sync
+# BetLedger Pro v2.8 — Cloudflare D1 Binding Fix
 
-This release makes Cloudflare D1 the primary shared data store for each account.
+This release fixes the Cloudflare D1 `500` error caused by a binding-name mismatch.
 
-## What changed
+## Fixed
 
-- Automatically saves every bet, edit, deletion, bankroll change, import, reset, and demo-data change to Cloudflare D1.
-- Uses a 750 ms debounced save to avoid unnecessary writes.
-- Automatically loads the account's latest D1 data at login.
-- Retries pending changes when internet access returns.
-- Checks for newer cloud data every 20 seconds while the app is open and whenever the tab becomes active.
-- Displays `Saving…`, `Saved to Cloudflare`, `Pending sync`, or `Sync failed` status.
-- Keeps localStorage only as an offline cache.
-- Removes obsolete Supabase sync code that could override the Cloudflare implementation.
+- The Pages project exposes the D1 database as `DB`.
+- `functions/api/state.js` now reads and writes through `env.DB`.
+- `wrangler.toml` now uses `binding = "DB"` so local configuration matches production.
+- The state API now returns useful D1 error messages and writes detailed errors to Cloudflare Functions logs.
+- Automatic cloud saving, cloud loading, offline cache, retries, and cross-device refresh remain enabled.
 
-## Deployment
+## Required update
 
-For an existing Cloudflare Pages deployment, replace `index.html` and `README.md` in the GitHub repository and commit to the deployed branch.
+For this release, replace these files in the GitHub repository:
 
-The existing `functions/`, `schema.sql`, `wrangler.toml`, D1 database, bindings, and Cloudflare secrets can remain unchanged.
+- `index.html`
+- `README.md`
+- `functions/api/state.js`
+- `wrangler.toml`
 
-## Verify
+Keep the following unchanged:
 
-1. Sign in and add a test bet.
-2. Wait until the status reads `Saved to Cloudflare`.
-3. In the D1 console run:
+- `functions/api/_auth.js`
+- `functions/api/login.js`
+- `functions/api/logout.js`
+- `functions/api/session.js`
+- `schema.sql`
+- Cloudflare secrets
+- Existing D1 database data
 
-```sql
-SELECT user_id, updated_at, length(bets_json) AS bets_json_size FROM user_state;
+Your Cloudflare Pages D1 binding must remain:
+
+```text
+Variable name: DB
+Database: betledger-db
 ```
 
-4. Sign in to the same account on another device. The test bet should load automatically.
+After committing, allow Cloudflare Pages to deploy the new version.
+
+## Verification
+
+1. Sign in to BetLedger.
+2. Add or edit a test bet.
+3. Wait for `Saved to Cloudflare`.
+4. In the D1 console, run:
+
+```sql
+SELECT user_id, updated_at, length(bets_json) AS bets_json_size
+FROM user_state;
+```
+
+5. Sign in to the same account on another device. The saved data should load automatically.
+
+If the API reports `no such table: user_state`, execute `schema.sql` once in the D1 console.
