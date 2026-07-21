@@ -3,6 +3,6 @@ compatibility_date = "2026-07-21"
 pages_build_output_dir = "."
 
 [[d1_databases]]
-binding = "BETLEDGER_DB"
+binding = "DB"
 database_name = "betledger-db"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id = "YOUR-ACTUAL-DATABASE-UUID"
