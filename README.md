@@ -1,108 +1,96 @@
-# BetLedger Pro v2.2 — Personal Cloud Sync
+# BetLedger Pro v2.4 — Cloudflare Edition
 
-A responsive sports-betting profit-and-loss tracker for GitHub Pages with optional Supabase cloud syncing.
+Private two-user sports-betting ledger for **Jarol** and **Mateo**.
 
-## What changed in v2.2
+## Included
 
-- Secure email/password sign-in
-- Automatic cloud sync after saves, edits, deletions, imports, resets, and settings changes
-- Cross-device access through your personal Supabase account
-- Manual **Pull cloud data** control
-- Local browser fallback when offline or before cloud setup
-- Row Level Security so each authenticated user can access only their own ledger
-- Visible cloud connection and sync status
-- JSON and CSV backup tools remain available
+- Colorful responsive dashboard
+- Separate Jarol and Mateo accounts
+- Cloudflare Pages Functions authentication
+- HttpOnly signed session cookies
+- Cloudflare D1 storage
+- User-specific local cache for temporary offline access
+- JSON backup and CSV export
+- No public registration
 
-## Files to upload to GitHub
+## 1. Create the D1 database
 
-Upload all four files to the root of your `Bet-Ledger` repository:
+Install Node.js, open a terminal in this folder, and run:
 
-- `index.html`
-- `README.md`
-- `supabase-config.js`
-- `supabase-setup.sql`
-
-## 1. Create the free Supabase project
-
-1. Create a Supabase account and a new project.
-2. In the project dashboard, open **SQL Editor**.
-3. Copy all content from `supabase-setup.sql`.
-4. Run the SQL once.
-
-This creates one private cloud-state row per authenticated user and enables Row Level Security.
-
-## 2. Add your safe browser credentials
-
-1. In Supabase, open **Project Settings → API**.
-2. Copy the **Project URL**.
-3. Copy the **Publishable key**. Older projects may label the equivalent low-privilege key as `anon`.
-4. Open `supabase-config.js` and replace:
-
-```js
-window.BETLEDGER_SUPABASE_URL = 'YOUR_SUPABASE_PROJECT_URL';
-window.BETLEDGER_SUPABASE_PUBLISHABLE_KEY = 'YOUR_SUPABASE_PUBLISHABLE_KEY';
+```bash
+npx wrangler login
+npx wrangler d1 create betledger-db
 ```
 
-Never put a secret key, `sb_secret_...` key, or `service_role` key in this file.
+Copy the returned database ID into `wrangler.toml`.
 
-## 3. Configure authentication URLs
+Apply the schema:
 
-In Supabase, open **Authentication → URL Configuration**.
+```bash
+npx wrangler d1 execute betledger-db --remote --file=schema.sql
+```
 
-Set the Site URL to:
+## 2. Push this folder to GitHub
 
-`https://jarolgutierrez5-netizen.github.io/Bet-Ledger/`
+Upload the complete folder contents, including the `functions` directory, to a GitHub repository.
 
-Add the same URL under allowed redirect URLs.
+## 3. Create a Cloudflare Pages project
 
-For simplest personal use, you may leave email confirmation enabled and confirm the first signup email. You may also disable email confirmation in the Supabase authentication provider settings if you understand the tradeoff and only use this privately.
+1. Cloudflare dashboard → **Workers & Pages**.
+2. Create a Pages project and connect the GitHub repository.
+3. Framework preset: **None**.
+4. Build command: leave blank.
+5. Build output directory: `.`
+6. Deploy.
 
-## 4. Upload and publish
+Dashboard drag-and-drop is not suitable because this application uses Pages Functions.
 
-1. Open the GitHub repository `jarolgutierrez5-netizen/Bet-Ledger`.
-2. Select **Add file → Upload files**.
-3. Upload all four files.
-4. Commit to `main`.
-5. Open **Settings → Pages**.
-6. Choose **Deploy from a branch**.
-7. Select `main` and `/ (root)`.
+## 4. Bind D1
 
-Published site:
+In the Pages project:
 
-`https://jarolgutierrez5-netizen.github.io/Bet-Ledger/`
+1. **Settings → Bindings → Add binding**.
+2. Choose **D1 database**.
+3. Variable name: `BETLEDGER_DB`
+4. Select `betledger-db`.
+5. Add the binding to Production and Preview if desired.
+6. Redeploy.
 
-## 5. First use
+## 5. Add encrypted secrets
 
-1. Open the published site.
-2. Select **Cloud setup** or open **Settings**.
-3. Enter your email and a password of at least six characters.
-4. Select **Create account**.
-5. Confirm the email if your Supabase project requires it.
-6. Sign in.
-7. Add a bet. The cloud indicator should change to **Cloud synced**.
+In **Settings → Variables and Secrets**, add these as encrypted secrets:
 
-The first device with existing local wagers uploads them when no cloud record exists. A device with no local data automatically pulls the cloud ledger after sign-in. The **Pull cloud data** button can explicitly replace local data with the cloud copy.
+- `JAROL_PASSWORD`
+- `MATEO_PASSWORD`
+- `SESSION_SECRET`
 
-## Data safety
+Use unique passwords and a long random session secret. Example session-secret generator:
 
-- The application saves locally first, so temporary connectivity problems do not block bet entry.
-- Cloud synchronization is debounced briefly after changes.
-- Use **Backup JSON** periodically for an independent offline backup.
-- Simultaneous edits on two devices use a last-write-wins model because the complete personal ledger is stored as one JSON state record.
+```bash
+node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"
+```
 
-## Existing analytics
+Never commit real passwords or the session secret to GitHub.
 
-- Starting and current bankroll
-- Units and net P/L
-- ROI and win rate
-- Pending exposure
-- Average odds and stake
-- Closing Line Value
-- Performance by sport, market, sportsbook, and timing
-- Monthly reporting
-- Bankroll chart
-- JSON restore and CSV export
+## 6. Sign in
 
-## Disclaimer
+Open the deployed Cloudflare Pages URL, choose Jarol or Mateo, and enter the matching password.
 
-This application is for personal recordkeeping and informational use. It does not provide betting advice or guarantee outcomes. Bet responsibly.
+Each account receives:
+
+- A separate D1 row
+- A separate signed session
+- A separate local browser cache namespace
+- A separate dashboard, bankroll, bets, and analytics
+
+## Security notes
+
+- Passwords are read only from encrypted Cloudflare environment secrets.
+- Sessions use signed, HttpOnly, Secure, SameSite=Strict cookies.
+- API routes accept only `jarol` and `mateo`.
+- The database is never directly accessible from browser JavaScript.
+- Use HTTPS only; Cloudflare Pages provides HTTPS automatically.
+
+## Updating
+
+Replace repository files with the new version and push to the connected branch. Cloudflare Pages will redeploy automatically.
