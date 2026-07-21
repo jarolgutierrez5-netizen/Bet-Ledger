@@ -94,3 +94,12 @@ Each account receives:
 ## Updating
 
 Replace repository files with the new version and push to the connected branch. Cloudflare Pages will redeploy automatically.
+
+## Version 2.5 — Sidebar Dashboard Redesign
+
+- Replaced the oversized top utility bar with a fixed left navigation layout.
+- Added a compact Dashboard header and signed-in user chip.
+- Moved backup, restore, CSV export, demo data, and reset controls into Settings.
+- Restyled cards, charts, tables, forms, analytics, and navigation to match the supplied dark dashboard reference.
+- Preserved Cloudflare Pages Functions, D1 synchronization, and separate Jarol/Mateo data.
+- Added responsive tablet and mobile navigation behavior.
