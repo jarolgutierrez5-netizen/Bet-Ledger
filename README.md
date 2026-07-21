@@ -2,7 +2,7 @@
 
 A responsive, dependency-free sports betting profit-and-loss tracker designed for GitHub Pages.
 
-## Version 2.0 features
+## Version 2.1 features
 
 - Starting bankroll and current bankroll tracking
 - Standard unit size and unit-based P/L
@@ -51,3 +51,27 @@ Open `index.html` in any modern browser. No installation, build process, server,
 ## Disclaimer
 
 This application is for personal recordkeeping and informational use. It does not provide betting advice or guarantee outcomes. Bet responsibly.
+
+
+## Version 2.1 Fixes
+
+- Load Demo now confirms success and opens the Bets ledger automatically.
+- JSON restore now opens the Bets ledger and reports the restored record count.
+- Added visible success/error notifications.
+- Added browser-storage error handling.
+
+## GitHub Data Sync Note
+
+GitHub Pages can host the tracker automatically, but a public browser app should not contain a GitHub personal access token. Storing a token in frontend JavaScript or browser storage can expose repository write access. For secure cross-device bet syncing, use an authenticated database service or a small server-side API rather than committing live wager data directly from the browser.
+
+
+## Version 2.1 Fixes
+
+- Added explicit form validation messages when required fields are missing.
+- Added visible success and error notifications after saving a bet.
+- Added guarded browser-storage handling so restricted localStorage no longer makes the form silently fail.
+- Added automatic payout completion for wins and pushes when the payout field is blank.
+
+## GitHub Sync Limitation
+
+GitHub Pages can host this application, but the browser cannot securely commit each saved bet to the repository without a GitHub access token or backend service. Do not embed a personal access token in `index.html`, especially in a public repository. For multi-device automatic syncing, use a private database/backend such as Supabase or Firebase.
