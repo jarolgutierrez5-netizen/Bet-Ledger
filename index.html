@@ -48,7 +48,7 @@ body:before{opacity:.13;background-size:42px 42px}
 .page-content{max-width:1500px}.shell{width:100%;margin:0;padding:0}.topbar{display:none!important}.brand{display:none}
 .panel{border-radius:10px;background:linear-gradient(155deg,rgba(10,23,42,.97),rgba(7,17,32,.98));box-shadow:0 12px 35px rgba(0,0,0,.2)}
 .grid{gap:20px}.metrics{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.metric{min-height:180px;border-radius:9px;background:linear-gradient(150deg,#0b1b31,#081524);padding:22px}.metric:before{display:none}.metric label{text-transform:none;font-size:.84rem;letter-spacing:0;color:#e1e6ef}.metric strong{font-size:2rem}.metric small{font-size:.76rem;line-height:1.5}.metric:nth-child(n+5){min-height:118px}.chart{min-height:390px}.chartbox{height:325px}.panel-head{padding:20px 22px 0}.panel-head h2{font-size:1rem}.analytics-card{min-height:245px}.rank-item{background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.07);border-radius:0;padding:11px 3px}.rank-item:last-child{border-bottom:0}
-.btn{border-radius:9px}.form-panel,.history{border-radius:10px}.settings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.settings-card{border-radius:10px}.utility-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.utility-actions .btn{margin:0}
+.btn{border-radius:9px}.form-panel,.history{border-radius:10px}.settings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.settings-card{border-radius:10px}
 @media(max-width:1100px){.app-shell{grid-template-columns:88px minmax(0,1fr)}.side-brand{font-size:0;padding-inline:8px}.side-brand:after{content:"BL";font-size:1.2rem;color:#a879ff}.tab{font-size:0;justify-content:center}.tab:before{font-size:1rem}.workspace{padding-inline:22px}.metrics{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.app-shell{display:block}.sidebar{position:sticky;height:auto;padding:9px 10px;flex-direction:row;align-items:center;border-right:0;border-bottom:1px solid rgba(255,255,255,.1)}.side-brand{display:none}.tabs{display:flex;overflow:auto;gap:5px}.tab{font-size:.72rem;width:auto;white-space:nowrap;padding:10px}.tab:before{font-size:.9rem}.side-bottom{margin:0 0 0 auto}.side-bottom .btn{font-size:0;padding:10px}.side-bottom .btn:after{content:"↪";font-size:1rem}.workspace{padding:0 13px 24px}.page-top{min-height:92px}.page-title h1{font-size:1.65rem}.user-chip{min-width:0;padding:9px 11px}.metrics{grid-template-columns:1fr 1fr}.metric{min-height:128px;padding:15px}.metric strong{font-size:1.45rem}.settings-grid{grid-template-columns:1fr}}
 @media(max-width:430px){.metrics{grid-template-columns:1fr}.page-top{align-items:flex-start;padding-top:18px}.page-title p{max-width:220px}.user-chip{font-size:.7rem}}
@@ -175,6 +175,41 @@ td{font-size:.74rem}
   #bets .table-wrap{max-height:560px;min-height:0}
 }
 
+/* v3.0 dashboard compact + colorful refresh */
+#dashboard .grid{gap:10px}
+#dashboard .metrics{gap:8px}
+#dashboard .metric{min-height:96px!important;padding:12px 14px;border-left:3px solid transparent}
+#dashboard .metric label{font-size:.66rem;display:flex;align-items:center;gap:6px}
+#dashboard .metric label:before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+#dashboard .metric strong{font-size:1.3rem}
+#dashboard .metric small{font-size:.64rem}
+#dashboard .metric:nth-child(1){border-left-color:var(--blue)}#dashboard .metric:nth-child(1) label{color:var(--blue)}
+#dashboard .metric:nth-child(2){border-left-color:var(--cyan)}#dashboard .metric:nth-child(2) label{color:var(--cyan)}
+#dashboard .metric:nth-child(3){border-left-color:var(--green)}#dashboard .metric:nth-child(3) label{color:var(--green)}
+#dashboard .metric:nth-child(4){border-left-color:var(--amber)}#dashboard .metric:nth-child(4) label{color:var(--amber)}
+#dashboard .metric:nth-child(5){border-left-color:var(--red)}#dashboard .metric:nth-child(5) label{color:var(--red)}
+#dashboard .metric:nth-child(6){border-left-color:var(--purple)}#dashboard .metric:nth-child(6) label{color:var(--purple)}
+#dashboard .metric:nth-child(7){border-left-color:var(--pink)}#dashboard .metric:nth-child(7) label{color:var(--pink)}
+#dashboard .metric:nth-child(8){border-left-color:var(--orange)}#dashboard .metric:nth-child(8) label{color:var(--orange)}
+#dashboard .chart{min-height:280px}
+#dashboard .chartbox{height:220px;padding:8px 16px 12px}
+#dashboard .panel-head{padding:12px 15px 0}
+#dashboard .panel-head h2{font-size:.86rem}
+#dashboard .panel-head p{font-size:.68rem;margin-top:2px}
+#dashboard .summary-body,#dashboard .analytics-body{padding:9px 15px 12px}
+#dashboard .analytics-card{min-height:165px}
+#dashboard .rank-list{gap:5px}
+#dashboard .rank-item{padding:7px 8px;border-left:3px solid transparent}
+#dashboard .rank-item:nth-child(4n+1){border-left-color:var(--blue)}
+#dashboard .rank-item:nth-child(4n+2){border-left-color:var(--cyan)}
+#dashboard .rank-item:nth-child(4n+3){border-left-color:var(--pink)}
+#dashboard .rank-item:nth-child(4n+4){border-left-color:var(--amber)}
+#dashboard .rank-name{font-size:.78rem}
+#dashboard .rank-meta{font-size:.64rem}
+#dashboard .insight{padding:9px;font-size:.71rem;margin-top:7px}
+#dashboard .progress-row{margin:8px 0}
+#dashboard .progress-top{font-size:.7rem}
+
 </style>
 </head>
 <body>
@@ -213,7 +248,6 @@ td{font-size:.74rem}
 <section id="settings" class="view"><div class="settings-grid">
 <section class="panel settings-card"><h3>Cloudflare account</h3><p id="cloudHelp">Your ledger is encrypted in transit and stored separately in Cloudflare D1.</p><div class="auth-grid"><div class="notice" id="cloudNotice">Checking session…</div><div class="actions"><button class="btn" id="pullCloudBtn">Refresh cloud data</button><button class="btn hidden" id="cloudBtn"><span class="cloud-status"><span class="cloud-dot" id="cloudDot"></span><span id="cloudLabel">Cloudflare</span></span></button></div></div></section>
 <section class="panel settings-card"><h3>Bankroll settings</h3><div class="field"><label>Starting bankroll ($)</label><input id="startingBankroll" type="number" min="0" step=".01"></div><div class="field" style="margin-top:10px"><label>Standard unit size ($)</label><input id="unitSize" type="number" min=".01" step=".01"></div><button class="btn primary" id="saveSettingsBtn">Save settings</button></section>
-<section class="panel settings-card"><h3>Data &amp; backup</h3><p>Export a local backup, restore from a file, or seed demo data.</p><div class="utility-actions"><button class="btn" id="settingsBackupBtn">Export JSON backup</button><button class="btn" id="settingsCsvBtn">Export CSV</button><button class="btn" id="jsonImportBtn">Import backup</button><input type="file" id="jsonFile" accept="application/json" class="hidden"></div><div class="utility-actions"><button class="btn" id="demoBtn">Load demo data</button><button class="btn danger" id="resetBtn">Reset all data</button></div></section>
 
 </div></section>
 </div></div></main></div><div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
@@ -262,9 +296,7 @@ $('betForm').addEventListener('submit',e=>{e.preventDefault();if(!validateBetFor
 function resetForm(){document.querySelectorAll('.field-error').forEach(x=>x.remove());$('betForm').reset();$('date').value=new Date().toISOString().slice(0,10);editingId=null;applyStakeDefault();$('sportsbookOther').classList.add('hidden');$('formTitle').textContent='Add a bet';$('submitBtn').textContent='Save bet';$('cancelBtn').classList.add('hidden')}$('cancelBtn').onclick=resetForm;
 window.editBet=id=>{const b=bets.find(x=>x.id===id);if(!b)return;editingId=id;if(b.sportsbook&&![...$('sportsbook').options].some(o=>o.value===b.sportsbook))$('sportsbook').add(new Option(b.sportsbook,b.sportsbook,false,false),$('sportsbook').querySelector('option[value="Other"]'));$('sportsbookOther').classList.add('hidden');Object.keys(b).forEach(k=>{if($(k))$(k).value=b[k]??''});$('formTitle').textContent='Edit bet';$('submitBtn').textContent='Update bet';$('cancelBtn').classList.remove('hidden');document.querySelector('[data-view="bets"]').click();scrollTo({top:0,behavior:'smooth'})};window.deleteBet=id=>{if(confirm('Delete this bet?')){bets=bets.filter(b=>b.id!==id);save();render()}};
 const pageCopy={dashboard:['Dashboard','Overview of your bankroll, performance and recent bets.'],bets:['Bets','Add, grade, search and manage your wagers.'],analytics:['Analytics','Review ROI, CLV and performance breakdowns.'],settings:['Settings','Manage bankroll and Cloudflare sync.']};document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));t.classList.add('active');$(t.dataset.view).classList.add('active');$('pageTitle').textContent=pageCopy[t.dataset.view][0];$('pageSubtitle').textContent=pageCopy[t.dataset.view][1];if(t.dataset.view==='dashboard')requestAnimationFrame(renderChart)});['searchFilter','sportFilter','resultFilter','marketFilter','bookFilter','rangeFilter'].forEach(id=>$(id).addEventListener('input',renderTable));addEventListener('resize',()=>document.querySelector('#dashboard.active')&&renderChart());
-function download(name,text,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}function backup(){download(`betledger-pro-backup-${new Date().toISOString().slice(0,10)}.json`,JSON.stringify({version:2,exportedAt:new Date().toISOString(),settings,bets},null,2),'application/json')}function csv(){if(!bets.length)return alert('No bets to export.');const h=['date','sport','event','betType','sportsbook','selection','odds','stake','closingOdds','timing','result','payout','notes'],cell=v=>{const s=String(v??'').replace(/"/g,'""');return /[",\n]/.test(s)?`"${s}"`:s};download(`betledger-pro-${new Date().toISOString().slice(0,10)}.csv`,[h.join(','),...bets.map(b=>h.map(k=>cell(b[k])).join(','))].join('\n'),'text/csv')}
-$('cloudBtn').onclick=()=>document.querySelector('[data-view="settings"]').click();$('signOutBtn').onclick=async()=>{try{await api('logout',{method:'POST'});}finally{currentUser=null;bets=[];clearInterval(cloudPollTimer);$('userChip').classList.add('hidden');$('loginGate').classList.remove('hidden');render();}};$('pullCloudBtn').onclick=()=>pullCloudState(true);$('settingsBackupBtn').onclick=backup;$('settingsCsvBtn').onclick=csv;$('jsonImportBtn').onclick=()=>$('jsonFile').click();$('jsonFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(!Array.isArray(d.bets))throw Error('Invalid backup');if(!confirm(`Replace current data with ${d.bets.length} bets from this backup?`))return;bets=d.bets;settings={...settings,...d.settings};save();syncSettings();render();alert('Backup restored.')}catch(err){alert(`Restore failed: ${err.message}`)}e.target.value=''};
-function syncSettings(){$('startingBankroll').value=settings.startingBankroll;$('unitSize').value=settings.unitSize;applyStakeDefault()}syncSettings();$('saveSettingsBtn').onclick=()=>{settings.startingBankroll=Math.max(0,+$('startingBankroll').value||0);settings.unitSize=Math.max(.01,+$('unitSize').value||10);save();applyStakeDefault();render();alert('Settings saved.')};$('resetBtn').onclick=()=>{if(confirm('Delete all bets and restore default settings?')){bets=[];settings={startingBankroll:1000,unitSize:10};save();syncSettings();resetForm();render()}};
-$('demoBtn').onclick=()=>{if(bets.length&&!confirm('Add demo data to your existing ledger?'))return;const d=n=>new Date(Date.now()-n*86400000).toISOString().slice(0,10),raw=[[42,'MLB','Cubs at Cardinals','Moneyline','DraftKings','Cubs ML',125,40,115,'Pregame','Win',90],[37,'NBA','Knicks at Celtics','Spread / Run Line','FanDuel','Knicks +5.5',-110,55,-118,'Pregame','Loss',0],[31,'MLB','Dodgers at Padres','Player Prop','BetMGM','Ohtani O1.5 TB',105,50,-105,'Pregame','Win',102.5],[24,'NFL','Packers at Bears','Total','Caesars','Under 44.5',-115,60,-110,'Pregame','Push',60],[18,'NHL','Stars at Avalanche','Moneyline','DraftKings','Avalanche ML',-135,67.5,-150,'Pregame','Win',117.5],[12,'MLB','Mets at Phillies','Parlay','FanDuel','Phillies ML + O7.5',220,35,200,'Pregame','Loss',0],[6,'NBA','Lakers at Suns','Live Bet','ESPN BET','Suns +3.5',-105,45,-120,'Live','Win',87.86],[0,'MLB','Mariners at Astros','Player Prop','Fanatics','Rodríguez O1.5 TB',115,45,0,'Pregame','Pending',0]];bets.push(...raw.map(x=>({id:uid(),createdAt:Date.now(),date:d(x[0]),sport:x[1],event:x[2],betType:x[3],sportsbook:x[4],selection:x[5],odds:x[6],stake:x[7],closingOdds:x[8],timing:x[9],result:x[10],payout:x[11],notes:''})));save();render()};
+$('cloudBtn').onclick=()=>document.querySelector('[data-view="settings"]').click();$('signOutBtn').onclick=async()=>{try{await api('logout',{method:'POST'});}finally{currentUser=null;bets=[];clearInterval(cloudPollTimer);$('userChip').classList.add('hidden');$('loginGate').classList.remove('hidden');render();}};$('pullCloudBtn').onclick=()=>pullCloudState(true);
+function syncSettings(){$('startingBankroll').value=settings.startingBankroll;$('unitSize').value=settings.unitSize;applyStakeDefault()}syncSettings();$('saveSettingsBtn').onclick=()=>{settings.startingBankroll=Math.max(0,+$('startingBankroll').value||0);settings.unitSize=Math.max(.01,+$('unitSize').value||10);save();applyStakeDefault();render();alert('Settings saved.')};
 $('loginForm').addEventListener('submit',async e=>{e.preventDefault();const user=$('loginUser').value,password=$('loginPassword').value,msg=$('loginMessage');msg.textContent='Signing in…';try{const data=await api('login',{method:'POST',body:JSON.stringify({user,password})});$('loginPassword').value='';msg.textContent='';await establishSession(data.user)}catch(err){msg.textContent=err.message}});render();initCloud();
 </script></body></html>
