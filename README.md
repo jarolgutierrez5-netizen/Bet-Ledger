@@ -1,77 +1,108 @@
-# BetLedger Pro
+# BetLedger Pro v2.2 — Personal Cloud Sync
 
-A responsive, dependency-free sports betting profit-and-loss tracker designed for GitHub Pages.
+A responsive sports-betting profit-and-loss tracker for GitHub Pages with optional Supabase cloud syncing.
 
-## Version 2.1 features
+## What changed in v2.2
 
-- Starting bankroll and current bankroll tracking
-- Standard unit size and unit-based P/L
-- Net profit, ROI, win rate, average stake, pending exposure, and average odds
-- Closing Line Value (CLV) using bet odds versus closing odds
-- Pregame versus live-bet tracking
-- Performance breakdowns by sport, market, sportsbook, and timing
-- Monthly performance table
-- Bankroll curve and cumulative P/L chart
-- Add, edit, delete, search, and filter wagers
-- Automatic American-odds payout calculation
-- Complete JSON backup and restore
-- CSV export for spreadsheet analysis
-- Local browser storage
-- Responsive desktop, tablet, and mobile layouts
-- Demo dataset for testing
+- Secure email/password sign-in
+- Automatic cloud sync after saves, edits, deletions, imports, resets, and settings changes
+- Cross-device access through your personal Supabase account
+- Manual **Pull cloud data** control
+- Local browser fallback when offline or before cloud setup
+- Row Level Security so each authenticated user can access only their own ledger
+- Visible cloud connection and sync status
+- JSON and CSV backup tools remain available
 
-## Manual GitHub upload
+## Files to upload to GitHub
 
-1. Open your `Bet-Ledger` repository on GitHub.
-2. Select **Add file → Upload files**.
-3. Upload `index.html` and `README.md` from this folder.
-4. Commit the files to the `main` branch.
-5. Open **Settings → Pages**.
-6. Under **Build and deployment**, choose **Deploy from a branch**.
-7. Select the `main` branch and the `/ (root)` folder, then save.
+Upload all four files to the root of your `Bet-Ledger` repository:
 
-Your site should be published at:
+- `index.html`
+- `README.md`
+- `supabase-config.js`
+- `supabase-setup.sql`
+
+## 1. Create the free Supabase project
+
+1. Create a Supabase account and a new project.
+2. In the project dashboard, open **SQL Editor**.
+3. Copy all content from `supabase-setup.sql`.
+4. Run the SQL once.
+
+This creates one private cloud-state row per authenticated user and enables Row Level Security.
+
+## 2. Add your safe browser credentials
+
+1. In Supabase, open **Project Settings → API**.
+2. Copy the **Project URL**.
+3. Copy the **Publishable key**. Older projects may label the equivalent low-privilege key as `anon`.
+4. Open `supabase-config.js` and replace:
+
+```js
+window.BETLEDGER_SUPABASE_URL = 'YOUR_SUPABASE_PROJECT_URL';
+window.BETLEDGER_SUPABASE_PUBLISHABLE_KEY = 'YOUR_SUPABASE_PUBLISHABLE_KEY';
+```
+
+Never put a secret key, `sb_secret_...` key, or `service_role` key in this file.
+
+## 3. Configure authentication URLs
+
+In Supabase, open **Authentication → URL Configuration**.
+
+Set the Site URL to:
 
 `https://jarolgutierrez5-netizen.github.io/Bet-Ledger/`
 
-## Data storage and device syncing
+Add the same URL under allowed redirect URLs.
 
-GitHub Pages hosts the application files, but wagers are stored in the browser's `localStorage`. They are not automatically committed to GitHub and do not automatically sync between devices.
+For simplest personal use, you may leave email confirmation enabled and confirm the first signup email. You may also disable email confirmation in the Supabase authentication provider settings if you understand the tradeoff and only use this privately.
 
-Use **Backup JSON** to download a complete copy of the ledger and settings. On another device, choose **Restore JSON** to import that backup. CSV exports are intended for analysis and external recordkeeping.
+## 4. Upload and publish
 
-## Important security note
+1. Open the GitHub repository `jarolgutierrez5-netizen/Bet-Ledger`.
+2. Select **Add file → Upload files**.
+3. Upload all four files.
+4. Commit to `main`.
+5. Open **Settings → Pages**.
+6. Choose **Deploy from a branch**.
+7. Select `main` and `/ (root)`.
 
-Do not place a GitHub personal access token directly in `index.html`. Any token included in a public GitHub Pages site can be seen and misused by visitors. True authenticated multi-device cloud sync should use a backend service such as Supabase or Firebase with appropriate access controls.
+Published site:
 
-## Run locally
+`https://jarolgutierrez5-netizen.github.io/Bet-Ledger/`
 
-Open `index.html` in any modern browser. No installation, build process, server, or external dependency is required.
+## 5. First use
+
+1. Open the published site.
+2. Select **Cloud setup** or open **Settings**.
+3. Enter your email and a password of at least six characters.
+4. Select **Create account**.
+5. Confirm the email if your Supabase project requires it.
+6. Sign in.
+7. Add a bet. The cloud indicator should change to **Cloud synced**.
+
+The first device with existing local wagers uploads them when no cloud record exists. A device with no local data automatically pulls the cloud ledger after sign-in. The **Pull cloud data** button can explicitly replace local data with the cloud copy.
+
+## Data safety
+
+- The application saves locally first, so temporary connectivity problems do not block bet entry.
+- Cloud synchronization is debounced briefly after changes.
+- Use **Backup JSON** periodically for an independent offline backup.
+- Simultaneous edits on two devices use a last-write-wins model because the complete personal ledger is stored as one JSON state record.
+
+## Existing analytics
+
+- Starting and current bankroll
+- Units and net P/L
+- ROI and win rate
+- Pending exposure
+- Average odds and stake
+- Closing Line Value
+- Performance by sport, market, sportsbook, and timing
+- Monthly reporting
+- Bankroll chart
+- JSON restore and CSV export
 
 ## Disclaimer
 
 This application is for personal recordkeeping and informational use. It does not provide betting advice or guarantee outcomes. Bet responsibly.
-
-
-## Version 2.1 Fixes
-
-- Load Demo now confirms success and opens the Bets ledger automatically.
-- JSON restore now opens the Bets ledger and reports the restored record count.
-- Added visible success/error notifications.
-- Added browser-storage error handling.
-
-## GitHub Data Sync Note
-
-GitHub Pages can host the tracker automatically, but a public browser app should not contain a GitHub personal access token. Storing a token in frontend JavaScript or browser storage can expose repository write access. For secure cross-device bet syncing, use an authenticated database service or a small server-side API rather than committing live wager data directly from the browser.
-
-
-## Version 2.1 Fixes
-
-- Added explicit form validation messages when required fields are missing.
-- Added visible success and error notifications after saving a bet.
-- Added guarded browser-storage handling so restricted localStorage no longer makes the form silently fail.
-- Added automatic payout completion for wins and pushes when the payout field is blank.
-
-## GitHub Sync Limitation
-
-GitHub Pages can host this application, but the browser cannot securely commit each saved bet to the repository without a GitHub access token or backend service. Do not embed a personal access token in `index.html`, especially in a public repository. For multi-device automatic syncing, use a private database/backend such as Supabase or Firebase.
