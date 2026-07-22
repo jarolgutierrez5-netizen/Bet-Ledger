@@ -33,6 +33,21 @@ a{color:inherit;text-decoration:none}
 .tab:hover:not(.active){background:var(--surface);color:var(--text)}
 .tab.active{background:var(--green-soft);color:var(--green)}
 .tab.active svg{opacity:1}
+.side-bottom{margin-top:auto;padding-top:10px}
+.sidebar-toggle{width:100%;display:flex;align-items:center;gap:8px;padding:8px 10px;min-height:36px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--muted);font-size:.78rem;font-weight:600}
+.sidebar-toggle:hover{background:var(--surface);color:var(--text)}
+.sidebar-toggle svg{width:14px;height:14px;flex:none;transition:transform .18s ease}
+.app-shell{transition:grid-template-columns .18s ease}
+.app-shell.sidebar-collapsed{grid-template-columns:72px minmax(0,1fr)}
+.app-shell.sidebar-collapsed .sidebar{padding-inline:8px}
+.app-shell.sidebar-collapsed .side-brand span,.app-shell.sidebar-collapsed .side-brand .word{display:none}
+.app-shell.sidebar-collapsed .tab span{display:none}
+.app-shell.sidebar-collapsed .tab{justify-content:center}
+.app-shell.sidebar-collapsed .workspace{padding-inline:16px}
+.app-shell.sidebar-collapsed .sidebar-toggle{justify-content:center}
+.app-shell.sidebar-collapsed .sidebar-toggle span{display:none}
+.app-shell.sidebar-collapsed .sidebar-toggle svg{transform:rotate(180deg)}
+@media(max-width:1100px){.side-bottom{display:none}}
 
 
 .workspace{min-width:0;padding:0 22px 28px}
@@ -255,6 +270,7 @@ tbody tr,.bet-card{cursor:pointer}
     <button class="tab" data-view="analytics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V9M12 19V5M20 19v-6"/></svg><span>Analytics</span></button>
     <button class="tab" data-view="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.34 1.87l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.7 1.7 0 00-1.87-.34 1.7 1.7 0 00-1 1.55V21a2 2 0 01-4 0v-.09A1.7 1.7 0 009 19.4a1.7 1.7 0 00-1.87.34l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.7 1.7 0 004.6 15a1.7 1.7 0 00-1.55-1H3a2 2 0 010-4h.09A1.7 1.7 0 004.6 9a1.7 1.7 0 00-.34-1.87l-.06-.06a2 2 0 112.83-2.83l.06.06A1.7 1.7 0 009 4.6a1.7 1.7 0 001-1.55V3a2 2 0 014 0v.09a1.7 1.7 0 001 1.55 1.7 1.7 0 001.87-.34l.06-.06a2 2 0 112.83 2.83l-.06.06A1.7 1.7 0 0019.4 9a1.7 1.7 0 001.55 1H21a2 2 0 010 4h-.09a1.7 1.7 0 00-1.55 1z"/></svg><span>Settings</span></button>
   </nav>
+  <div class="side-bottom"><button class="sidebar-toggle" id="sidebarToggleBtn" type="button" title="Collapse sidebar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg><span>Collapse</span></button></div>
 </aside>
 <main class="workspace">
   <header class="page-top">
@@ -379,6 +395,7 @@ addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('editModalBackdrop').clas
 window.editBet=id=>{const b=bets.find(x=>x.id===id);if(!b)return;editingId=id;if(b.sportsbook&&![...$('sportsbook').options].some(o=>o.value===b.sportsbook))$('sportsbook').add(new Option(b.sportsbook,b.sportsbook,false,false),$('sportsbook').querySelector('option[value="Other"]'));$('sportsbookOther').classList.add('hidden');Object.keys(b).forEach(k=>{if($(k))$(k).value=b[k]??''});$('formTitle').textContent='Edit bet';$('submitBtn').textContent='Update bet';$('cancelBtn').classList.remove('hidden');$('deleteBtn').classList.remove('hidden');$('betFormPanel').classList.remove('collapsed');$('editModalShell').appendChild($('betFormPanel'));$('editModalBackdrop').classList.remove('hidden')};
 const pageCopy={dashboard:['Dashboard','Overview of your bankroll, performance and recent bets.'],bets:['Bets','Add, grade, search and manage your wagers.'],analytics:['Analytics','Review ROI and performance breakdowns.'],settings:['Settings','Manage bankroll and Cloudflare sync.']};document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));t.classList.add('active');$(t.dataset.view).classList.add('active');$('pageTitle').textContent=pageCopy[t.dataset.view][0];$('pageSubtitle').textContent=pageCopy[t.dataset.view][1];$('dashRange').classList.toggle('hidden',t.dataset.view!=='dashboard');if(t.dataset.view==='dashboard')requestAnimationFrame(()=>{renderChart();renderDayBarChart();renderAllocationChart()})});['searchFilter','sportFilter','resultFilter','marketFilter','bookFilter','rangeFilter'].forEach(id=>$(id).addEventListener('input',renderTable));addEventListener('resize',()=>{if(document.querySelector('#dashboard.active')){renderChart();renderDayBarChart();renderAllocationChart()}});
 document.querySelectorAll('#dashRange span').forEach(s=>s.onclick=()=>{document.querySelectorAll('#dashRange span').forEach(x=>x.classList.remove('on'));s.classList.add('on');dashboardRangeDays=s.dataset.days?+s.dataset.days:null;renderDashboard()});
+const appShellEl=document.querySelector('.app-shell');if(localStorage.getItem('sidebarCollapsed')==='1'){appShellEl.classList.add('sidebar-collapsed');$('sidebarToggleBtn').title='Expand sidebar'}$('sidebarToggleBtn').onclick=()=>{const collapsed=appShellEl.classList.toggle('sidebar-collapsed');localStorage.setItem('sidebarCollapsed',collapsed?'1':'0');$('sidebarToggleBtn').title=collapsed?'Expand sidebar':'Collapse sidebar';if(document.querySelector('#dashboard.active'))requestAnimationFrame(()=>{renderChart();renderDayBarChart();renderAllocationChart()})};
 $('cloudBtn').onclick=()=>document.querySelector('[data-view="settings"]').click();$('signOutBtn').onclick=async()=>{try{await api('logout',{method:'POST'});}finally{currentUser=null;bets=[];clearInterval(cloudPollTimer);$('userChip').classList.add('hidden');$('loginGate').classList.remove('hidden');setCloudStatus('Signed out');render();}};$('pullCloudBtn').onclick=()=>pullCloudState(true);
 function syncSettings(){$('startingBankroll').value=settings.startingBankroll;$('unitSize').value=settings.unitSize;applyStakeDefault()}syncSettings();$('saveSettingsBtn').onclick=()=>{settings.startingBankroll=Math.max(0,+$('startingBankroll').value||0);settings.unitSize=Math.max(.01,+$('unitSize').value||10);save();applyStakeDefault();render();alert('Settings saved.')};
 $('loginForm').addEventListener('submit',async e=>{e.preventDefault();const user=$('loginUser').value,password=$('loginPassword').value,msg=$('loginMessage');msg.textContent='Signing in…';try{const data=await api('login',{method:'POST',body:JSON.stringify({user,password})});$('loginPassword').value='';msg.textContent='';await establishSession(data.user)}catch(err){msg.textContent=err.message}});render();initCloud();
