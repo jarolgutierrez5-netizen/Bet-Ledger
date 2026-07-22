@@ -53,6 +53,9 @@ a{color:inherit;text-decoration:none}
 .panel-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:15px 16px 0}
 .panel-head h2{margin:0;font-family:"Outfit",sans-serif;font-size:.9rem;letter-spacing:-.01em;font-weight:700}
 .panel-head p{margin:2px 0 0;color:var(--muted);font-size:.72rem}
+.form-toggle{display:none;background:none;border:none;color:var(--muted);padding:2px;flex:none;align-self:center}
+.form-toggle svg{display:block;transition:transform .18s ease}
+.modal-shell .form-toggle{display:none!important}
 .panel-head .meta{font-size:.75rem;color:var(--muted)}
 .panel-head .meta b{color:var(--text)}
 
@@ -199,6 +202,11 @@ tbody tr,.bet-card{cursor:pointer}
 }
 @media(max-width:760px){
   .workspace{padding:0 10px 20px}
+  #betFormPanel .panel-head{cursor:pointer;padding-bottom:15px}
+  .modal-shell #betFormPanel .panel-head{cursor:default}
+  .form-toggle{display:flex}
+  #betFormPanel.collapsed .form-toggle svg{transform:rotate(-90deg)}
+  #betFormPanel.collapsed .form{display:none}
   .app-shell{display:block}
   .sidebar{position:sticky;height:auto;padding:6px;flex-direction:row;align-items:center;border-right:0;border-bottom:1px solid var(--border)}
   .side-brand{display:none}
@@ -268,7 +276,7 @@ tbody tr,.bet-card{cursor:pointer}
 <section class="footer-strip" id="bottomStats"></section>
 </div></section>
 
-<section id="bets" class="view"><div class="grid"><section class="panel form-panel" id="betFormPanel"><div class="panel-head"><div><h2 id="formTitle">Add a bet</h2><p>Enter settled or pending wagers.</p></div></div><form class="form" id="betForm"><div class="form-grid">
+<section id="bets" class="view"><div class="grid"><section class="panel form-panel collapsed" id="betFormPanel"><div class="panel-head"><div><h2 id="formTitle">Add a bet</h2><p>Enter settled or pending wagers.</p></div><button class="form-toggle" id="formToggle" type="button" aria-label="Toggle add a bet form"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button></div><form class="form" id="betForm"><div class="form-grid">
 <div class="field"><label>Date</label><input name="date" id="date" type="date" required></div><div class="field"><label>Sport</label><select name="sport" id="sport"><option>MLB</option><option>NFL</option><option>NBA</option><option>NHL</option><option>NCAAF</option><option>NCAAB</option><option>Soccer</option><option>Tennis</option><option>Golf</option><option>MMA</option><option>Other</option></select></div>
 <div class="field"><label>Bet type</label><select name="betType" id="betType"><option>Moneyline</option><option>Spread / Run Line</option><option>Total</option><option>Player Prop</option><option>Parlay</option><option>Future</option><option>Live Bet</option><option>Other</option></select></div><div class="field"><label>Sportsbook</label><select name="sportsbook" id="sportsbook"><option value="">Select sportsbook</option><option>Bet365</option><option>BetMGM</option><option>BetRivers</option><option>Caesars</option><option>DraftKings</option><option>ESPN BET</option><option>Fanatics</option><option>FanDuel</option><option>Fliff</option><option>Hard Rock Bet</option><option>PointsBet</option><option>WynnBET</option><option>Other</option></select><input id="sportsbookOther" placeholder="Enter sportsbook name" class="hidden" style="margin-top:7px"></div><div class="field full"><label>Event / matchup</label><input name="event" id="event" required placeholder="Yankees at Red Sox"></div>
 <div class="field full"><label>Selection</label><input name="selection" id="selection" required placeholder="Red Sox ML"></div><div class="field"><label>American odds</label><input name="odds" id="odds" type="number" required placeholder="-110"></div><div class="field"><label>Stake ($)</label><input name="stake" id="stake" type="number" min=".01" step=".01" required placeholder="50"></div>
@@ -352,11 +360,12 @@ $('betForm').addEventListener('submit',e=>{e.preventDefault();if(!validateBetFor
 function resetForm(){document.querySelectorAll('.field-error').forEach(x=>x.remove());$('betForm').reset();$('date').value=new Date().toISOString().slice(0,10);editingId=null;applyStakeDefault();$('sportsbookOther').classList.add('hidden');$('formTitle').textContent='Add a bet';$('submitBtn').textContent='Save bet';$('cancelBtn').classList.add('hidden');$('deleteBtn').classList.add('hidden')}$('cancelBtn').onclick=()=>{resetForm();closeEditModal()};
 $('deleteBtn').onclick=()=>{if(editingId&&confirm('Delete this bet?')){bets=bets.filter(b=>b.id!==editingId);save();resetForm();closeEditModal();render()}};
 const betFormParent=$('betFormPanel').parentNode,betFormNext=$('betFormPanel').nextSibling;
-function closeEditModal(){$('editModalBackdrop').classList.add('hidden');if(betFormNext)betFormParent.insertBefore($('betFormPanel'),betFormNext);else betFormParent.appendChild($('betFormPanel'))}
+function closeEditModal(){$('editModalBackdrop').classList.add('hidden');if(betFormNext)betFormParent.insertBefore($('betFormPanel'),betFormNext);else betFormParent.appendChild($('betFormPanel'));$('betFormPanel').classList.add('collapsed')}
+$('betFormPanel').querySelector('.panel-head').onclick=()=>{if($('editModalShell').contains($('betFormPanel')))return;$('betFormPanel').classList.toggle('collapsed')};
 $('editModalClose').onclick=()=>{resetForm();closeEditModal()};
 $('editModalBackdrop').onclick=e=>{if(e.target===e.currentTarget){resetForm();closeEditModal()}};
 addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('editModalBackdrop').classList.contains('hidden')){resetForm();closeEditModal()}});
-window.editBet=id=>{const b=bets.find(x=>x.id===id);if(!b)return;editingId=id;if(b.sportsbook&&![...$('sportsbook').options].some(o=>o.value===b.sportsbook))$('sportsbook').add(new Option(b.sportsbook,b.sportsbook,false,false),$('sportsbook').querySelector('option[value="Other"]'));$('sportsbookOther').classList.add('hidden');Object.keys(b).forEach(k=>{if($(k))$(k).value=b[k]??''});$('formTitle').textContent='Edit bet';$('submitBtn').textContent='Update bet';$('cancelBtn').classList.remove('hidden');$('deleteBtn').classList.remove('hidden');$('editModalShell').appendChild($('betFormPanel'));$('editModalBackdrop').classList.remove('hidden')};
+window.editBet=id=>{const b=bets.find(x=>x.id===id);if(!b)return;editingId=id;if(b.sportsbook&&![...$('sportsbook').options].some(o=>o.value===b.sportsbook))$('sportsbook').add(new Option(b.sportsbook,b.sportsbook,false,false),$('sportsbook').querySelector('option[value="Other"]'));$('sportsbookOther').classList.add('hidden');Object.keys(b).forEach(k=>{if($(k))$(k).value=b[k]??''});$('formTitle').textContent='Edit bet';$('submitBtn').textContent='Update bet';$('cancelBtn').classList.remove('hidden');$('deleteBtn').classList.remove('hidden');$('betFormPanel').classList.remove('collapsed');$('editModalShell').appendChild($('betFormPanel'));$('editModalBackdrop').classList.remove('hidden')};
 const pageCopy={dashboard:['Dashboard','Overview of your bankroll, performance and recent bets.'],bets:['Bets','Add, grade, search and manage your wagers.'],analytics:['Analytics','Review ROI and performance breakdowns.'],settings:['Settings','Manage bankroll and Cloudflare sync.']};document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));t.classList.add('active');$(t.dataset.view).classList.add('active');$('pageTitle').textContent=pageCopy[t.dataset.view][0];$('pageSubtitle').textContent=pageCopy[t.dataset.view][1];$('dashRange').classList.toggle('hidden',t.dataset.view!=='dashboard');if(t.dataset.view==='dashboard')requestAnimationFrame(()=>{renderChart();renderDayBarChart();renderAllocationChart()})});['searchFilter','sportFilter','resultFilter','marketFilter','bookFilter','rangeFilter'].forEach(id=>$(id).addEventListener('input',renderTable));addEventListener('resize',()=>{if(document.querySelector('#dashboard.active')){renderChart();renderDayBarChart();renderAllocationChart()}});
 document.querySelectorAll('#dashRange span').forEach(s=>s.onclick=()=>{document.querySelectorAll('#dashRange span').forEach(x=>x.classList.remove('on'));s.classList.add('on');dashboardRangeDays=s.dataset.days?+s.dataset.days:null;renderDashboard()});
 $('cloudBtn').onclick=()=>document.querySelector('[data-view="settings"]').click();$('signOutBtn').onclick=async()=>{try{await api('logout',{method:'POST'});}finally{currentUser=null;bets=[];clearInterval(cloudPollTimer);$('userChip').classList.add('hidden');$('loginGate').classList.remove('hidden');setCloudStatus('Signed out');render();}};$('pullCloudBtn').onclick=()=>pullCloudState(true);
