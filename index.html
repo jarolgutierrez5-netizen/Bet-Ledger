@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0a0b12">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f5f5f7">
 <title>Bet Ledger — Jarol & Mateo</title>
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icon-192.png"><link rel="apple-touch-icon" href="/icon-192.png">
-<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Bet Ledger">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Bet Ledger">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
 
 :root{
-  --bg:#0a0b12;--sidebar:#0b0d15;--surface:#121520;--surface-2:#171b28;
-  --border:rgba(255,255,255,.08);--border-2:rgba(255,255,255,.05);
-  --text:#f2f4f8;--muted:#9aa1b5;--text-3:#838aa0;
-  --green:#3b82f6;--green-soft:rgba(59,130,246,.14);
-  --red:#ef4444;--red-soft:rgba(239,68,68,.14);
-  --amber:#eab308;--amber-soft:rgba(234,179,8,.14);
-  --radius:14px;--shadow:0 20px 46px -24px rgba(0,0,0,.6);--shadow-soft:0 10px 26px -16px rgba(0,0,0,.5)
+  --bg:#f5f5f7;--sidebar:rgba(251,251,253,.78);--surface:#ffffff;--surface-2:#f5f5f7;
+  --border:rgba(0,0,0,.08);--border-2:rgba(0,0,0,.05);
+  --text:#1d1d1f;--muted:#6e6e73;--text-3:#86868b;
+  --green:#0071e3;--green-soft:rgba(0,113,227,.09);
+  --red:#ff3b30;--red-soft:rgba(255,59,48,.1);
+  --amber:#ff9500;--amber-soft:rgba(255,149,0,.12);
+  --radius:16px;--shadow:0 20px 40px -20px rgba(0,0,0,.14);--shadow-soft:0 10px 22px -14px rgba(0,0,0,.1)
 }
 *{box-sizing:border-box}html{scroll-behavior:smooth;zoom:.9}
-body{margin:0;min-height:100vh;color:var(--text);font-family:"Manrope",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg)}
+body{margin:0;min-height:100vh;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Manrope",ui-sans-serif,system-ui,"Segoe UI",sans-serif;background:var(--bg);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 .tabular{font-variant-numeric:tabular-nums}
 a{color:inherit;text-decoration:none}
 
 /* ===== app shell ===== */
 .app-shell{min-height:100vh;display:grid;grid-template-columns:205px minmax(0,1fr)}
-.sidebar{position:sticky;top:0;height:100vh;padding:20px 12px 14px;border-right:1px solid var(--border);background:var(--sidebar);display:flex;flex-direction:column;z-index:20}
-.side-brand{display:flex;align-items:center;gap:8px;font-family:"Outfit",sans-serif;font-size:1.15rem;font-weight:800;letter-spacing:-.02em;padding:5px 8px 20px;color:var(--text)}
+.sidebar{position:sticky;top:0;height:100vh;padding:20px 12px 14px;border-right:1px solid var(--border);background:var(--sidebar);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);display:flex;flex-direction:column;z-index:20}
+.side-brand{display:flex;align-items:center;gap:8px;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Outfit",sans-serif;font-size:1.15rem;font-weight:800;letter-spacing:-.02em;padding:5px 8px 20px;color:var(--text)}
 .side-brand svg{color:var(--green);flex:none}
 .side-brand span{color:var(--green)}
 .tabs{display:grid;gap:2px;margin:0;padding:0;width:100%}
@@ -55,7 +55,7 @@ a{color:inherit;text-decoration:none}
 
 .workspace{min-width:0;padding:0 22px 28px}
 .page-top{min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:18px 0 14px}
-.page-title h1{font-family:"Outfit",sans-serif;margin:0;font-size:1.5rem;letter-spacing:-.03em}
+.page-title h1{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Outfit",sans-serif;margin:0;font-size:1.5rem;letter-spacing:-.03em}
 .page-title p{margin:3px 0 0;color:var(--muted);font-size:.78rem}
 .head-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .range{display:flex;gap:2px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:3px}
@@ -72,7 +72,7 @@ a{color:inherit;text-decoration:none}
 .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}
 .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-soft);overflow:hidden}
 .panel-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:15px 16px 0}
-.panel-head h2{margin:0;font-family:"Outfit",sans-serif;font-size:.9rem;letter-spacing:-.01em;font-weight:700}
+.panel-head h2{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Outfit",sans-serif;font-size:.9rem;letter-spacing:-.01em;font-weight:700}
 .panel-head p{margin:2px 0 0;color:var(--muted);font-size:.72rem}
 .form-toggle{display:none;background:none;border:none;color:var(--muted);padding:2px;flex:none;align-self:center}
 .form-toggle svg{display:block;transition:transform .18s ease}
@@ -88,7 +88,7 @@ a{color:inherit;text-decoration:none}
 .metric-top{display:flex;align-items:flex-start;justify-content:space-between;gap:6px}
 .metric label{color:var(--muted);font-size:.66rem;font-weight:700}
 .metric-icon{width:22px;height:22px;border-radius:7px;background:var(--green-soft);color:var(--green);display:grid;place-items:center;flex:none}
-.metric strong{font-family:"Outfit",sans-serif;font-size:1.3rem;letter-spacing:-.02em}
+.metric strong{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Outfit",sans-serif;font-size:1.3rem;letter-spacing:-.02em}
 .metric small{font-size:.64rem;color:var(--text-3)}
 .positive{color:var(--green)!important}.negative{color:var(--red)!important}.neutral{color:var(--amber)!important}.accent{color:var(--text)!important}
 
@@ -111,9 +111,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--green);box-shadow:0 0
 .form-actions{display:flex;gap:7px;margin-top:11px}.form-actions .btn{flex:1}
 .btn{border:1px solid var(--border);background:var(--surface-2);color:var(--text);border-radius:9px;padding:9px 11px;font-weight:700;font-size:.76rem;transition:border-color .15s,background .15s}
 .btn:hover{border-color:var(--green)}
-.btn.primary{background:var(--green);border-color:var(--green);color:#071019}
-.btn.primary:hover{background:#60a5fa}
-.btn.danger{color:#ffb4b4;border-color:rgba(239,68,68,.35);background:var(--red-soft)}
+.btn.primary{background:var(--green);border-color:var(--green);color:#fff}
+.btn.primary:hover{background:#0077ed}
+.btn.danger{color:#d70015;border-color:rgba(255,59,48,.35);background:var(--red-soft)}
 
 .filters{display:grid;grid-template-columns:1.25fr repeat(5,minmax(0,.65fr));gap:7px;padding:11px 14px;border-bottom:1px solid var(--border)}
 .table-wrap{overflow:auto;max-height:560px}
@@ -122,7 +122,7 @@ th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--border-2)}
 th{position:sticky;top:0;background:var(--surface-2);z-index:2;color:var(--muted);font-size:.62rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700}
 td{font-size:.76rem}
 tr:hover td{background:var(--surface-2)}
-.sport-chip{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;font-size:.56rem;font-weight:800;color:#0a0b0a;margin-right:8px;flex:none;vertical-align:middle}
+.sport-chip{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;font-size:.56rem;font-weight:800;color:#1d1d1f;margin-right:8px;flex:none;vertical-align:middle}
 .badge{display:inline-flex;padding:4px 8px;border-radius:999px;font-size:.64rem;font-weight:700}
 .win{color:var(--green);background:var(--green-soft)}.loss{color:var(--red);background:var(--red-soft)}.push{color:var(--amber);background:var(--amber-soft)}.pending{color:var(--muted);background:var(--surface-2)}
 .grade-row{display:inline-flex;gap:4px}
@@ -130,7 +130,7 @@ tr:hover td{background:var(--surface-2)}
 .grade-btn.grade-win:hover{border-color:var(--green);color:var(--green);background:var(--green-soft)}
 .grade-btn.grade-loss:hover{border-color:var(--red);color:var(--red);background:var(--red-soft)}
 .grade-btn.grade-push:hover{border-color:var(--amber);color:var(--amber);background:var(--amber-soft)}
-.grade-btn.grade-sold:hover{border-color:#38bdf8;color:#38bdf8;background:rgba(56,189,248,.14)}
+.grade-btn.grade-sold:hover{border-color:var(--green);color:var(--green);background:var(--green-soft)}
 .empty{padding:30px;text-align:center;color:var(--muted);font-size:.82rem}
 .bet-cards{display:none}
 .bet-card{border:1px solid var(--border);border-radius:12px;padding:12px 14px;background:var(--surface-2)}
@@ -145,9 +145,9 @@ tr:hover td{background:var(--surface-2)}
 .bc-meta{display:flex;flex-wrap:wrap;gap:5px 10px;margin:10px 0 0;font-size:.72rem;color:var(--muted)}
 .foot{padding:9px 14px 12px;color:var(--text-3);font-size:.66rem}
 .toast{position:fixed;right:18px;bottom:18px;z-index:50;max-width:360px;padding:12px 15px;border-radius:12px;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow);font-weight:700;font-size:.82rem}
-.toast.success{border-color:rgba(59,130,246,.4);color:#bfdbfe}.toast.error{border-color:rgba(239,68,68,.4);color:#ffd0d0}
-.field-error{color:#ff9a9a;font-size:.7rem;font-weight:700;margin-top:2px}
-.modal-backdrop{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:22px;background:rgba(4,5,4,.72)}
+.toast.success{border-color:rgba(0,113,227,.35);color:#0058b0}.toast.error{border-color:rgba(255,59,48,.35);color:#d70015}
+.field-error{color:#d70015;font-size:.7rem;font-weight:700;margin-top:2px}
+.modal-backdrop{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:22px;background:rgba(0,0,0,.35)}
 .modal-wrap{position:relative;width:min(480px,100%);max-height:88vh}
 .modal-shell{max-height:88vh;overflow:auto;border-radius:14px}
 .modal-shell .panel{box-shadow:var(--shadow)}
@@ -161,7 +161,7 @@ tbody tr,.bet-card{cursor:pointer}
 .rank-item{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:8px 3px;border-bottom:1px solid var(--border-2)}
 .rank-item:last-child{border-bottom:none}
 .rank-item.with-chip{grid-template-columns:auto 1fr auto}
-.rank-chip{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:7px;font-size:.56rem;font-weight:800;color:#0a0b0a;flex:none}
+.rank-chip{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:7px;font-size:.56rem;font-weight:800;color:#1d1d1f;flex:none}
 .rank-name{font-weight:700;font-size:.8rem}
 .rank-meta{font-size:.64rem;color:var(--text-3);margin-top:1px}
 .rank-track{height:4px;border-radius:999px;background:var(--surface-2);overflow:hidden;margin-top:5px}
@@ -186,19 +186,19 @@ tbody tr,.bet-card{cursor:pointer}
 
 .mini-table{min-width:0}.mini-table th{position:static}.mini-table td,.mini-table th{padding:9px}
 .settings-grid{grid-column:span 12;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.settings-card{padding:16px}.settings-card h3{margin:0 0 9px;font-family:"Outfit",sans-serif;font-size:.92rem}
+.settings-card{padding:16px}.settings-card h3{margin:0 0 9px;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Outfit",sans-serif;font-size:.92rem}
 .settings-card p{color:var(--muted);font-size:.72rem;line-height:1.55}.settings-card .btn{margin-top:10px}
 .cloud-status{display:inline-flex;align-items:center;gap:7px}
 .cloud-dot{width:8px;height:8px;border-radius:50%;background:var(--amber)}
 .cloud-dot.online{background:var(--green)}.cloud-dot.offline{background:var(--red)}
 .auth-grid{display:grid;gap:10px}
-.notice{padding:11px;border-radius:10px;background:var(--amber-soft);border:1px solid rgba(234,179,8,.3);font-size:.76rem;color:#f3d78a}
+.notice{padding:11px;border-radius:10px;background:var(--amber-soft);border:1px solid rgba(255,149,0,.3);font-size:.76rem;color:#a35700}
 .view{display:none}.view.active{display:block}
 
 .login-gate{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:22px;background:var(--bg)}
 .login-card{width:min(410px,100%);padding:23px;border-radius:16px;border:1px solid var(--border);background:var(--surface);box-shadow:var(--shadow)}
-.login-card .logo{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--green-soft);color:var(--green);margin-bottom:16px;font-family:"Outfit",sans-serif;font-weight:800}
-.login-card h2{font-family:"Outfit",sans-serif;font-size:1.5rem;margin:0 0 6px}
+.login-card .logo{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--green-soft);color:var(--green);margin-bottom:16px;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Outfit",sans-serif;font-weight:800}
+.login-card h2{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Outfit",sans-serif;font-size:1.5rem;margin:0 0 6px}
 .login-card p{color:var(--muted);line-height:1.55;font-size:.85rem}
 .login-card .field{margin-top:12px}.login-card .btn{width:100%;margin-top:16px;padding:11px}
 
@@ -395,9 +395,9 @@ function renderWeeklyRecap(){const start=weekStartLocal(),list=bets.filter(b=>b.
 function renderRanksDashboard(){const list=dashboardFiltered(),sports=groupBy('sport',list),markets=groupBy('betType',list),books=groupBy('sportsbook',list);$('bestSports').innerHTML=rankHTML(sports,4,true);$('bestMarkets').innerHTML=rankHTML(markets,4,false);$('bestBooks').innerHTML=rankHTML(books,4,false)}
 function renderRanksAnalytics(){const sports=groupBy('sport'),markets=groupBy('betType'),books=groupBy('sportsbook'),timing=groupBy('timing'),days=groupByDayOfWeek();$('sportRanks').innerHTML=rankHTML(sports,20,true);$('marketRanks').innerHTML=rankHTML(markets,20,false);$('bookRanks').innerHTML=rankHTML(books,20,false);$('timingRanks').innerHTML=rankHTML(timing,20,false);$('dayRanks').innerHTML=rankHTML(days,7,false)}
 function dailyBars(list){const map={};settled(list).forEach(b=>{map[b.date]=(map[b.date]||0)+pl(b)});return Object.keys(map).sort().slice(-30).map(d=>({date:d,value:map[d]}))}
-function allocationSegments(){const s=stats(bets),pending=s.pending,segs=[];if(s.profit>=0){segs.push({label:'Starting bankroll',value:+settings.startingBankroll,color:'#3b82f6'});if(s.profit>0)segs.push({label:'Net profit',value:s.profit,color:'#7dd3fc'})}else{segs.push({label:'Current bankroll',value:Math.max(s.currentBankroll,0),color:'#ef4444'})}if(pending>0)segs.push({label:'Pending bets',value:pending,color:'#eab308'});return segs}
-function renderChart(){const data=settled(bets).sort((a,b)=>a.date.localeCompare(b.date)||a.createdAt-b.createdAt),c=$('profitChart'),r=c.getBoundingClientRect(),d=devicePixelRatio||1;c.width=Math.max(1,r.width*d);c.height=Math.max(1,r.height*d);const x=c.getContext('2d');x.setTransform(d,0,0,d,0,0);x.clearRect(0,0,r.width,r.height);$('chartCount').textContent=`${data.length} settled bets`;$('chartEmpty').classList.toggle('hidden',!!data.length);if(!data.length)return;let run=+settings.startingBankroll;const pts=data.map(b=>({date:b.date,value:run+=pl(b)})),vals=[+settings.startingBankroll,...pts.map(p=>p.value)],pad={l:60,r:14,t:16,b:26},w=r.width-pad.l-pad.r,h=r.height-pad.t-pad.b;let min=Math.min(...vals),max=Math.max(...vals);if(min===max){min-=10;max+=10}const m=(max-min)*.12;min-=m;max+=m;const xx=i=>pad.l+(pts.length===1?w/2:i/(pts.length-1)*w),yy=v=>pad.t+(max-v)/(max-min)*h;x.font='11px system-ui';for(let i=0;i<=3;i++){const v=max-(max-min)*i/3,y=pad.t+h*i/3;x.strokeStyle='rgba(255,255,255,.06)';x.beginPath();x.moveTo(pad.l,y);x.lineTo(pad.l+w,y);x.stroke();x.fillStyle='rgba(255,255,255,.35)';x.textAlign='right';x.fillText(money(v).replace('.00',''),pad.l-8,y+4)}x.strokeStyle='#3b82f6';x.lineWidth=2.25;x.lineCap='round';x.lineJoin='round';x.beginPath();pts.forEach((p,i)=>i?x.lineTo(xx(i),yy(p.value)):x.moveTo(xx(i),yy(p.value)));x.stroke();const g=x.createLinearGradient(0,pad.t,0,pad.t+h);g.addColorStop(0,'rgba(59,130,246,.28)');g.addColorStop(1,'rgba(59,130,246,0)');x.fillStyle=g;x.beginPath();pts.forEach((p,i)=>i?x.lineTo(xx(i),yy(p.value)):x.moveTo(xx(i),yy(p.value)));x.lineTo(xx(pts.length-1),pad.t+h);x.lineTo(xx(0),pad.t+h);x.closePath();x.fill();x.fillStyle=pts.at(-1).value>=settings.startingBankroll?'#3b82f6':'#ef4444';x.beginPath();x.arc(xx(pts.length-1),yy(pts.at(-1).value),4,0,Math.PI*2);x.fill();x.fillStyle='rgba(255,255,255,.35)';const idxs=[0,Math.floor((pts.length-1)/2),pts.length-1].filter((v,i,a)=>a.indexOf(v)===i);idxs.forEach(i=>{x.textAlign=i===0?'left':i===pts.length-1?'right':'center';x.fillText(dateFmt(pts[i].date),xx(i),r.height-8)})}
-function renderDayBarChart(){const c=$('dayBarChart');if(!c)return;const bars=dailyBars(dashboardFiltered()),r=c.getBoundingClientRect(),d=devicePixelRatio||1;c.width=Math.max(1,r.width*d);c.height=Math.max(1,r.height*d);const x=c.getContext('2d');x.setTransform(d,0,0,d,0,0);x.clearRect(0,0,r.width,r.height);$('dayBarAvg').textContent=bars.length?money(bars.reduce((a,p)=>a+p.value,0)/bars.length):'—';$('dayBarEmpty').classList.toggle('hidden',!!bars.length);if(!bars.length)return;const w=r.width,h=r.height,pad=10,padT=18,padB=20,vals=bars.map(p=>p.value),maxAbs=Math.max(1,...vals.map(Math.abs))*1.4,zeroY=padT+(h-padT-padB)/2,scale=(h-padT-padB)/2/maxAbs,bw=(w-pad*2)/bars.length,showLabels=bars.length<=20;x.strokeStyle='rgba(255,255,255,.14)';x.setLineDash([3,3]);x.beginPath();x.moveTo(pad,zeroY);x.lineTo(w-pad,zeroY);x.stroke();x.setLineDash([]);bars.forEach((p,i)=>{const bx=pad+i*bw+bw*.22,bw2=bw*.56,barH=Math.abs(p.value)*scale,by=p.value>=0?zeroY-barH:zeroY;x.fillStyle=p.value>=0?'#3b82f6':'#ef4444';const rr=Math.min(3,bw2/2,barH);x.beginPath();if(x.roundRect)x.roundRect(bx,by,bw2,Math.max(barH,2),p.value>=0?[rr,rr,0,0]:[0,0,rr,rr]);else x.rect(bx,by,bw2,Math.max(barH,2));x.fill();if(showLabels){x.fillStyle=p.value>=0?'#93c5fd':'#f5a3a3';x.font='9px system-ui';x.textAlign='center';x.fillText(signed(p.value).replace('.00',''),bx+bw2/2,p.value>=0?by-4:by+barH+11)}});x.fillStyle='rgba(255,255,255,.35)';x.font='11px system-ui';const idxs=[0,Math.floor((bars.length-1)/2),bars.length-1].filter((v,i,a)=>a.indexOf(v)===i);idxs.forEach(i=>{x.textAlign=i===0?'left':i===bars.length-1?'right':'center';x.fillText(dateFmt(bars[i].date),pad+i/((bars.length-1)||1)*(w-pad*2),h-4)})}
+function allocationSegments(){const s=stats(bets),pending=s.pending,segs=[];if(s.profit>=0){segs.push({label:'Starting bankroll',value:+settings.startingBankroll,color:'#0071e3'});if(s.profit>0)segs.push({label:'Net profit',value:s.profit,color:'#5ac8fa'})}else{segs.push({label:'Current bankroll',value:Math.max(s.currentBankroll,0),color:'#ff3b30'})}if(pending>0)segs.push({label:'Pending bets',value:pending,color:'#ff9500'});return segs}
+function renderChart(){const data=settled(bets).sort((a,b)=>a.date.localeCompare(b.date)||a.createdAt-b.createdAt),c=$('profitChart'),r=c.getBoundingClientRect(),d=devicePixelRatio||1;c.width=Math.max(1,r.width*d);c.height=Math.max(1,r.height*d);const x=c.getContext('2d');x.setTransform(d,0,0,d,0,0);x.clearRect(0,0,r.width,r.height);$('chartCount').textContent=`${data.length} settled bets`;$('chartEmpty').classList.toggle('hidden',!!data.length);if(!data.length)return;let run=+settings.startingBankroll;const pts=data.map(b=>({date:b.date,value:run+=pl(b)})),vals=[+settings.startingBankroll,...pts.map(p=>p.value)],pad={l:60,r:14,t:16,b:26},w=r.width-pad.l-pad.r,h=r.height-pad.t-pad.b;let min=Math.min(...vals),max=Math.max(...vals);if(min===max){min-=10;max+=10}const m=(max-min)*.12;min-=m;max+=m;const xx=i=>pad.l+(pts.length===1?w/2:i/(pts.length-1)*w),yy=v=>pad.t+(max-v)/(max-min)*h;x.font='11px system-ui';for(let i=0;i<=3;i++){const v=max-(max-min)*i/3,y=pad.t+h*i/3;x.strokeStyle='rgba(0,0,0,.07)';x.beginPath();x.moveTo(pad.l,y);x.lineTo(pad.l+w,y);x.stroke();x.fillStyle='rgba(0,0,0,.4)';x.textAlign='right';x.fillText(money(v).replace('.00',''),pad.l-8,y+4)}x.strokeStyle='#0071e3';x.lineWidth=2.25;x.lineCap='round';x.lineJoin='round';x.beginPath();pts.forEach((p,i)=>i?x.lineTo(xx(i),yy(p.value)):x.moveTo(xx(i),yy(p.value)));x.stroke();const g=x.createLinearGradient(0,pad.t,0,pad.t+h);g.addColorStop(0,'rgba(0,113,227,.16)');g.addColorStop(1,'rgba(0,113,227,0)');x.fillStyle=g;x.beginPath();pts.forEach((p,i)=>i?x.lineTo(xx(i),yy(p.value)):x.moveTo(xx(i),yy(p.value)));x.lineTo(xx(pts.length-1),pad.t+h);x.lineTo(xx(0),pad.t+h);x.closePath();x.fill();x.fillStyle=pts.at(-1).value>=settings.startingBankroll?'#0071e3':'#ff3b30';x.beginPath();x.arc(xx(pts.length-1),yy(pts.at(-1).value),4,0,Math.PI*2);x.fill();x.fillStyle='rgba(0,0,0,.4)';const idxs=[0,Math.floor((pts.length-1)/2),pts.length-1].filter((v,i,a)=>a.indexOf(v)===i);idxs.forEach(i=>{x.textAlign=i===0?'left':i===pts.length-1?'right':'center';x.fillText(dateFmt(pts[i].date),xx(i),r.height-8)})}
+function renderDayBarChart(){const c=$('dayBarChart');if(!c)return;const bars=dailyBars(dashboardFiltered()),r=c.getBoundingClientRect(),d=devicePixelRatio||1;c.width=Math.max(1,r.width*d);c.height=Math.max(1,r.height*d);const x=c.getContext('2d');x.setTransform(d,0,0,d,0,0);x.clearRect(0,0,r.width,r.height);$('dayBarAvg').textContent=bars.length?money(bars.reduce((a,p)=>a+p.value,0)/bars.length):'—';$('dayBarEmpty').classList.toggle('hidden',!!bars.length);if(!bars.length)return;const w=r.width,h=r.height,pad=10,padT=18,padB=20,vals=bars.map(p=>p.value),maxAbs=Math.max(1,...vals.map(Math.abs))*1.4,zeroY=padT+(h-padT-padB)/2,scale=(h-padT-padB)/2/maxAbs,bw=(w-pad*2)/bars.length,showLabels=bars.length<=20;x.strokeStyle='rgba(0,0,0,.14)';x.setLineDash([3,3]);x.beginPath();x.moveTo(pad,zeroY);x.lineTo(w-pad,zeroY);x.stroke();x.setLineDash([]);bars.forEach((p,i)=>{const bx=pad+i*bw+bw*.22,bw2=bw*.56,barH=Math.abs(p.value)*scale,by=p.value>=0?zeroY-barH:zeroY;x.fillStyle=p.value>=0?'#0071e3':'#ff3b30';const rr=Math.min(3,bw2/2,barH);x.beginPath();if(x.roundRect)x.roundRect(bx,by,bw2,Math.max(barH,2),p.value>=0?[rr,rr,0,0]:[0,0,rr,rr]);else x.rect(bx,by,bw2,Math.max(barH,2));x.fill();if(showLabels){x.fillStyle=p.value>=0?'#0071e3':'#d70015';x.font='9px system-ui';x.textAlign='center';x.fillText(signed(p.value).replace('.00',''),bx+bw2/2,p.value>=0?by-4:by+barH+11)}});x.fillStyle='rgba(0,0,0,.4)';x.font='11px system-ui';const idxs=[0,Math.floor((bars.length-1)/2),bars.length-1].filter((v,i,a)=>a.indexOf(v)===i);idxs.forEach(i=>{x.textAlign=i===0?'left':i===bars.length-1?'right':'center';x.fillText(dateFmt(bars[i].date),pad+i/((bars.length-1)||1)*(w-pad*2),h-4)})}
 function renderAllocationChart(){const segs=allocationSegments(),total=segs.reduce((a,s)=>a+s.value,0);$('allocEmpty').classList.toggle('hidden',total>0);$('allocLegend').innerHTML=total>0?segs.map(s=>`<div class="legend-row"><div class="legend-left"><span class="legend-dot" style="background:${s.color}"></span><span class="txt">${esc(s.label)}</span></div><div class="legend-right"><b class="tabular">${money(s.value)}</b><span>${pct(s.value/total*100)}</span></div></div>`).join(''):''}
 function renderBottomStats(){const list=dashboardFiltered(),s=settled(list),wins=s.filter(b=>effectiveResult(b)==='Win'),losses=s.filter(b=>effectiveResult(b)==='Loss'),grossWin=wins.reduce((a,b)=>a+pl(b),0),grossLoss=Math.abs(losses.reduce((a,b)=>a+pl(b),0)),avgOdds=s.length?Math.round(s.reduce((a,b)=>a+ +b.odds,0)/s.length):0,avgStake=s.length?s.reduce((a,b)=>a+ +b.stake,0)/s.length:0,largestWin=wins.length?Math.max(...wins.map(pl)):0,largestLoss=losses.length?Math.min(...losses.map(pl)):0;$('bottomStats').innerHTML=`<div class="fs-item"><div class="fs-label">Total Bets</div><div class="fs-value tabular">${list.length}</div></div><div class="fs-item"><div class="fs-label">Winning</div><div class="fs-value tabular positive">${wins.length}${s.length?` (${pct(wins.length/s.length*100)})`:''}</div></div><div class="fs-item"><div class="fs-label">Losing</div><div class="fs-value tabular negative">${losses.length}${s.length?` (${pct(losses.length/s.length*100)})`:''}</div></div><div class="fs-item"><div class="fs-label">Avg Odds</div><div class="fs-value tabular">${s.length?`${avgOdds>0?'+':''}${avgOdds}`:'—'}</div></div><div class="fs-item"><div class="fs-label">Avg Stake</div><div class="fs-value tabular">${money(avgStake)}</div></div><div class="fs-item"><div class="fs-label">Largest Win</div><div class="fs-value tabular positive">${wins.length?signed(largestWin):'—'}</div></div><div class="fs-item"><div class="fs-label">Largest Loss</div><div class="fs-value tabular negative">${losses.length?signed(largestLoss):'—'}</div></div><div class="fs-item"><div class="fs-label">Profit Factor</div><div class="fs-value tabular">${grossLoss?(grossWin/grossLoss).toFixed(2):(grossWin>0?'∞':'—')}</div></div>`}
 function filterOptions(id,field,label){const el=$(id),old=el.value,vals=[...new Set(bets.map(b=>b[field]).filter(Boolean))].sort();el.innerHTML=`<option value="">All ${label}</option>`+vals.map(v=>`<option>${esc(v)}</option>`).join('');el.value=old}
