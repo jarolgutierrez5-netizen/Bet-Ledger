@@ -8,7 +8,7 @@ async function currentUser(request, env) {
 
 function getDatabase(env) {
   if (!env.DB || typeof env.DB.prepare !== 'function') {
-    throw new Error('Cloudflare D1 binding "DB" is unavailable. Confirm the production Pages binding is named DB.');
+    throw new Error('Database binding "DB" is unavailable. Confirm the production binding is named DB.');
   }
   return env.DB;
 }
