@@ -21,12 +21,17 @@ function parseStoredJson(value, fallback) {
   }
 }
 
-async function ensureTransactionsColumn(db) {
-  try {
-    await db.prepare("ALTER TABLE user_state ADD COLUMN transactions_json TEXT NOT NULL DEFAULT '[]'").run();
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    if (!/duplicate column/i.test(message)) throw error;
+async function ensureLedgerColumns(db) {
+  for (const stmt of [
+    "ALTER TABLE user_state ADD COLUMN transactions_json TEXT NOT NULL DEFAULT '[]'",
+    "ALTER TABLE user_state ADD COLUMN plays_json TEXT NOT NULL DEFAULT '[]'",
+  ]) {
+    try {
+      await db.prepare(stmt).run();
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      if (!/duplicate column/i.test(message)) throw error;
+    }
   }
 }
 
@@ -36,9 +41,9 @@ export async function onRequestGet({ request, env }) {
 
   try {
     const db = getDatabase(env);
-    await ensureTransactionsColumn(db);
+    await ensureLedgerColumns(db);
     const row = await db
-      .prepare('SELECT bets_json, settings_json, transactions_json, updated_at FROM user_state WHERE user_id = ?')
+      .prepare('SELECT bets_json, settings_json, transactions_json, plays_json, updated_at FROM user_state WHERE user_id = ?')
       .bind(user)
       .first();
 
@@ -49,6 +54,7 @@ export async function onRequestGet({ request, env }) {
         bets: parseStoredJson(row.bets_json, []),
         settings: parseStoredJson(row.settings_json, {}),
         transactions: parseStoredJson(row.transactions_json, []),
+        plays: parseStoredJson(row.plays_json, []),
         updatedAt: row.updated_at,
       },
     });
@@ -75,24 +81,29 @@ export async function onRequestPut({ request, env }) {
   if (body.transactions !== undefined && !Array.isArray(body.transactions)) {
     return json({ error: 'Invalid ledger payload.' }, 400);
   }
+  if (body.plays !== undefined && !Array.isArray(body.plays)) {
+    return json({ error: 'Invalid ledger payload.' }, 400);
+  }
   if (body.bets.length > 100000) return json({ error: 'Ledger is too large.' }, 413);
 
   const transactions = Array.isArray(body.transactions) ? body.transactions : [];
+  const plays = Array.isArray(body.plays) ? body.plays : [];
 
   try {
     const db = getDatabase(env);
-    await ensureTransactionsColumn(db);
+    await ensureLedgerColumns(db);
     const updatedAt = Date.now();
 
     await db
-      .prepare(`INSERT INTO user_state (user_id, bets_json, settings_json, transactions_json, updated_at)
-        VALUES (?, ?, ?, ?, ?)
+      .prepare(`INSERT INTO user_state (user_id, bets_json, settings_json, transactions_json, plays_json, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?)
         ON CONFLICT(user_id) DO UPDATE SET
           bets_json = excluded.bets_json,
           settings_json = excluded.settings_json,
           transactions_json = excluded.transactions_json,
+          plays_json = excluded.plays_json,
           updated_at = excluded.updated_at`)
-      .bind(user, JSON.stringify(body.bets), JSON.stringify(body.settings), JSON.stringify(transactions), updatedAt)
+      .bind(user, JSON.stringify(body.bets), JSON.stringify(body.settings), JSON.stringify(transactions), JSON.stringify(plays), updatedAt)
       .run();
 
     return json({ ok: true, updatedAt });
